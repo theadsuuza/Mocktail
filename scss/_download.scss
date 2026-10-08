@@ -1,0 +1,163 @@
+@use 'tokens' as *;
+
+.download {
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(255, 61, 113, 0.16), transparent 60%),
+    radial-gradient(70% 60% at 50% 100%, rgba(124, 92, 255, 0.14), transparent 62%);
+}
+
+.dl-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.dl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  text-align: left;
+  padding: 28px;
+  border-radius: $r-lg;
+  border: 1px solid $line;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  backdrop-filter: blur(16px);
+  color: $text;
+  font-family: $font-body;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.35s $ease, border-color 0.35s $ease, box-shadow 0.35s $ease, opacity 0.35s $ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.1), transparent 70%);
+    background-size: 220% 100%;
+    opacity: 0;
+    transition: opacity 0.4s $ease;
+  }
+
+  &:hover:not(:disabled):not(.is-waiting):not(.is-done) {
+    transform: translateY(-6px);
+    border-color: rgba(255, 61, 113, 0.55);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+
+    &::before { opacity: 1; animation: shimmer 1.4s linear infinite; }
+  }
+
+  &.is-locked, &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    filter: grayscale(0.6);
+  }
+
+  &.is-waiting {
+    cursor: progress;
+    border-color: rgba(255, 207, 92, 0.55);
+  }
+
+  &.is-done {
+    border-color: rgba(46, 230, 168, 0.55);
+    background: linear-gradient(160deg, rgba(46, 230, 168, 0.14), rgba(255, 255, 255, 0.02));
+  }
+}
+
+@keyframes shimmer {
+  from { background-position: -220% 0; }
+  to   { background-position: 220% 0; }
+}
+
+.dl__ring {
+  position: relative;
+  flex: 0 0 auto;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+}
+
+.dl__track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 6;
+}
+
+.dl__prog {
+  fill: none;
+  stroke: url(#g);
+  stroke: $coral;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke 0.3s $ease;
+}
+
+.dl.is-done .dl__prog { stroke: $mint; }
+.dl.is-waiting .dl__prog { stroke: $gold; }
+
+.dl__icon {
+  position: relative;
+  z-index: 1;
+  font-family: $font-display;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: $coral;
+  transition: color 0.3s $ease;
+}
+
+.dl.is-waiting .dl__icon { color: $gold; }
+.dl.is-done .dl__icon { color: $mint; }
+
+.dl__body { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+
+.dl__label {
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.dl__note {
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $muted;
+}
+
+.dl__cta {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(100deg, $coral, $violet);
+}
+
+.dl.is-locked .dl__cta { background: rgba(255, 255, 255, 0.12); color: $muted; }
+.dl.is-done .dl__cta { background: $mint; color: #06231a; }
+
+.dl-status {
+  text-align: center;
+  margin: 28px 0 0;
+  color: $muted;
+  font-size: 0.92rem;
+  min-height: 1.4em;
+}
+
+@include bp(700px) {
+  .dl-grid { grid-template-columns: 1fr; }
+
+  .dl {
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 22px;
+  }
+
+  .dl__ring { width: 74px; height: 74px; }
+  .dl__cta { width: 100%; text-align: center; }
+}

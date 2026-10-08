@@ -1,0 +1,46 @@
+// ── Design tokens ─────────────────────────────────────────────
+$ink:      #07070d;
+$ink-2:    #0b0b16;
+$ink-3:    #101020;
+
+$text:     #f5f3f8;
+$muted:    #9b95a9;
+
+$coral:    #ff3d71;
+$violet:   #7c5cff;
+$mint:     #2ee6a8;
+$gold:     #ffcf5c;
+
+$line:     rgba(255, 255, 255, 0.10);
+$glass:    rgba(255, 255, 255, 0.045);
+
+$font-display: 'Sora', system-ui, sans-serif;
+$font-body:    'Inter', system-ui, sans-serif;
+$font-cond:    'Bebas Neue', sans-serif;
+
+$r-sm: 12px;
+$r:    18px;
+$r-lg: 28px;
+$r-xl: 36px;
+
+$wrap:  1200px;
+$nav-h: 76px;
+$ease:  cubic-bezier(0.22, 1, 0.36, 1);
+
+@mixin bp($w) {
+  @media (max-width: $w) { @content; }
+}
+
+@mixin glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  border: 1px solid $line;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+@mixin grad-text {
+  background: linear-gradient(100deg, $coral, $violet 55%, $gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

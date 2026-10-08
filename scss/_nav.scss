@@ -1,0 +1,109 @@
+@use 'tokens' as *;
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 70;
+  transition: background 0.4s $ease, border-color 0.4s $ease, backdrop-filter 0.4s $ease;
+  border-bottom: 1px solid transparent;
+
+  &.is-stuck {
+    background: rgba(7, 7, 13, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom-color: $line;
+  }
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: $nav-h;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  a {
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: $muted;
+    transition: color 0.3s $ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, $coral, $violet);
+      transition: width 0.3s $ease;
+    }
+
+    &:hover { color: $text; &::after { width: 100%; } }
+  }
+
+  .btn { color: #fff; }
+  .btn::after { display: none; }
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  span {
+    width: 26px;
+    height: 2px;
+    border-radius: 2px;
+    background: $text;
+    transition: transform 0.3s $ease, opacity 0.3s $ease;
+  }
+
+  &.is-open {
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+}
+
+@include bp(900px) {
+  .burger { display: flex; }
+
+  .nav__links {
+    position: fixed;
+    inset: $nav-h 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 10px 24px 26px;
+    background: rgba(9, 9, 18, 0.98);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid $line;
+    transform: translateY(-130%);
+    transition: transform 0.45s $ease;
+
+    &.is-open { transform: translateY(0); }
+
+    a {
+      width: 100%;
+      padding: 15px 0;
+      border-bottom: 1px solid $line;
+      font-size: 1rem;
+
+      &::after { display: none; }
+    }
+
+    .btn { margin-top: 16px; border-bottom: 0; }
+  }
+}

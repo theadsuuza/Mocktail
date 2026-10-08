@@ -1,0 +1,78 @@
+@use 'tokens' as *;
+
+.status {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 40px 22px;
+  overflow: hidden;
+}
+
+.status__card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  text-align: center;
+  padding: 54px 40px;
+  border-radius: $r-xl;
+  @include glass;
+  animation: fadeUp 0.8s $ease both;
+
+  .logo { margin-bottom: 34px; }
+}
+
+.status__code {
+  position: relative;
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(4.5rem, 20vw, 9rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0 0 8px;
+  @include grad-text;
+
+  &::before,
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    -webkit-background-clip: initial;
+    background: none;
+  }
+
+  &::before {
+    color: $coral;
+    opacity: 0.5;
+    animation: glitch 3.4s infinite linear alternate;
+  }
+
+  &::after {
+    color: $mint;
+    opacity: 0.35;
+    animation: glitch 2.6s infinite linear alternate-reverse;
+  }
+}
+
+.status__title {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.status__text {
+  color: $muted;
+  margin-bottom: 32px;
+}
+
+.status__actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@include bp(520px) {
+  .status__card { padding: 40px 24px; }
+  .status__actions .btn { flex: 1; }
+}
